@@ -4,11 +4,11 @@ import { getProyecto , getProyectos ,crearProyecto,updateProyecto,deleteProyecto
 
 const  router =  Router();
 
-router.get('/proyectos',authRequired ,getProyectos)
-router.get('/proyectos/:id',authRequired ,getProyecto)
-router.post('/proyectos',authRequired , crearProyecto)
-router.delete('/proyectos/:id',authRequired ,deleteProyecto)
-router.put('/proyectos/:id',authRequired ,updateProyecto)
+router.get('/proyectos' ,getProyectos)
+router.get('/proyectos/:id' ,getProyecto)
+router.post('/proyectos' , crearProyecto)
+router.delete('/proyectos/:id' ,deleteProyecto)
+router.put('/proyectos/:id' ,updateProyecto)
 
 
-export default router
+export default router;
