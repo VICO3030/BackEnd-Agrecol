@@ -47,7 +47,18 @@ const Proyecto = sequelize.define('proyecto', {
   id_user_proyect: {
     type: DataTypes.STRING(50),
     allowNull: true
+  },
+  municipio: {
+    type: DataTypes.STRING(50),
+    allowNull: false
   }
+  ,    
+  coordenadas: {
+     type: DataTypes.JSONB,
+      allowNull: false,
+  },
+
+
 }, {
   tableName: 'proyecto',
   timestamps: false

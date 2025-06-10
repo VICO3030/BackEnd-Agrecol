@@ -1,5 +1,5 @@
 import {Router}  from  'express';
-import { authRequired } from '../middlewares/validateToken.js';
+
 import { getProyecto , getProyectos ,crearProyecto,updateProyecto,deleteProyecto } from '../controllers/proyecto/proyecto.controller.js';
 
 const  router =  Router();
@@ -9,6 +9,7 @@ router.get('/proyectos/:id' ,getProyecto)
 router.post('/proyectos' , crearProyecto)
 router.delete('/proyectos/:id' ,deleteProyecto)
 router.put('/proyectos/:id' ,updateProyecto)
+
 
 
 export default router;

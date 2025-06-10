@@ -5,13 +5,14 @@ export const getProyectos = async (req, res) => {
   try {
     const proyectos = await Proyecto.findAll();
     res.json(proyectos);
+    console.log("hohohohoh")
   } catch (error) {
     console.error(error);
+    console.log("locaso pasa por aqui");
     res.status(500).json({ message: 'Error al obtener proyectos', error: error.message });
   }
 };
 
-// Crear un nuevo proyecto
 export const crearProyecto = async (req, res) => {
   try {
     const {
@@ -24,9 +25,13 @@ export const crearProyecto = async (req, res) => {
       inicio_date,
       final_date,
       id_proyect_bene,
-      id_user_proyect
+      id_user_proyect,
+      coordenadas,  
+      municipio
     } = req.body;
 
+
+    // Guardar el string directamente (sin convertirlo)
     const nuevoProyecto = await Proyecto.create({
       nombre,
       descripcion,
@@ -37,15 +42,25 @@ export const crearProyecto = async (req, res) => {
       inicio_date,
       final_date,
       id_proyect_bene,
-      id_user_proyect
+      id_user_proyect,
+      coordenadas,  
+      municipio
     });
 
-    res.status(201).json({ message: 'Proyecto creado', proyecto: nuevoProyecto });
+    res.status(201).json({ 
+      message: 'Proyecto creado exitosamente', 
+      proyecto: nuevoProyecto 
+    });
+
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error al crear proyecto', error: error.message });
+    console.error('Error al crear proyecto:', error);
+    res.status(500).json({ 
+      message: 'Error al crear proyecto', 
+      error: error.message 
+    });
   }
 };
+
 
 // Obtener un proyecto por ID
 export const getProyecto = async (req, res) => {

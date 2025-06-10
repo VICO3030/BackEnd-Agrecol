@@ -1,4 +1,38 @@
 import ObjetivoLogico from '../../models/proyecto/nivel.model.js';
+import Proyecto  from  '../../models/proyecto/proyecto.model.js';
+
+// Obtener objetivos por proyecto
+// proyecto.controller.js
+export const getObjetivosByProyecto = async (req, res) => {
+  try {
+    const { id } = req.params; // Cambia 'id_proyecto' por 'id' ya que es el nombre que estás pasando en la URL
+    
+    if (!id) {
+      return res.status(400).json({ message: 'ID de proyecto es requerido' });
+    }
+
+    // Verificar si el proyecto existe primero
+    const proyecto = await Proyecto.findByPk(id);
+    if (!proyecto) {
+      return res.status(404).json({ message: 'Proyecto no encontrado' });
+    }
+
+    const objetivos = await ObjetivoLogico.findAll({
+      where: { id_proyecto: id },  // Usamos el 'id' que se pasó en la URL
+      order: [['nivel', 'ASC']]  // Ordenar por nivel (Fin -> Propósito -> Componente -> Actividad)
+    });
+    
+    res.json(objetivos);
+  } catch (error) {
+    console.error('Error en getObjetivosByProyecto:', error);
+    res.status(500).json({ 
+      message: 'Error al obtener objetivos lógicos', 
+      error: error.message 
+    });
+  }
+};
+
+
 
 // Obtener todos los objetivos lógicos
 export const getObjetivosLogicos = async (req, res) => {
@@ -33,7 +67,6 @@ export const crearObjetivoLogico = async (req, res) => {
     if (!tipo || !descripcion || !id_proyecto || !nivel) {
       return res.status(400).json({ message: 'Campos incompletos' });
     }
-
     const nuevoObjetivo = await ObjetivoLogico.create({
       tipo,
       descripcion,

@@ -1,5 +1,5 @@
-import Indicador from '../../models/indicador/indicador.model.js';
-
+import Indicador from '../../models/proyecto/indicador.model.js';
+import axios from 'axios';
 // Obtener todos los indicadores
 export const getIndicadores = async (req, res) => {
   try {
@@ -39,6 +39,8 @@ export const crearIndicador = async (req, res) => {
       porcentaje_total,
       recoleccion_datos_calculo
     });
+
+
 
     res.status(201).json({ message: 'Indicador creado', indicador: nuevoIndicador });
   } catch (error) {

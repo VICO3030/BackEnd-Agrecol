@@ -10,8 +10,11 @@ export const register = async (req, res) => {
 
   try {
 
-   const userFound =  await Usuario.findOne({email})
+   const userFound =  await Usuario.findOne( {where: {email}})
+
   if(userFound) return res.status(400).json(["El email ya esta en uso"]);
+
+
 
 
 	const  passwordHash = await bcrypt.hash(password ,10)
@@ -22,13 +25,24 @@ export const register = async (req, res) => {
       nombre,
       tipo_user
     });
-	const token = await createAccessToken({id:newUser.id});
+
+       await fetch("http://10.144.41.14:90/users/1/web_requests/9/registro-usuario", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      nombre: newUser.nombre,
+      tipo_usuario: newUser.tipo_user,
+      email: newUser.email,
+      fechaRegistro: new Date().toISOString()
+    })
+  });
+/*	const token = await createAccessToken({id:newUser.id});
 	res.cookie('token',token)
     res.json({
 		id:newUser.id_usuario,
 		usuario:newUser.usuario,
 		email: newUser.email
-	})
+	})*/
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error en registro', error: error.message });
