@@ -5,7 +5,7 @@ import Proyecto  from  '../../models/proyecto/proyecto.model.js';
 // proyecto.controller.js
 export const getObjetivosByProyecto = async (req, res) => {
   try {
-    const { id } = req.params; // Cambia 'id_proyecto' por 'id' ya que es el nombre que estás pasando en la URL
+    const { id } = req.params; 
     
     if (!id) {
       return res.status(400).json({ message: 'ID de proyecto es requerido' });
